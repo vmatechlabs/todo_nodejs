@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const modules = require('./src/router');
 
 const db = require('./src/model');
+const { job } = require('./jobs/cronJobs');
 const app = express();
 
 app.use(bodyParser.json());
@@ -18,6 +19,8 @@ app.use('*', (req, res) => {
 });
 
 const PORT =  5010;
+
+job.start()
 
 db.sequelize
   .sync({ force: false, alter: true })
